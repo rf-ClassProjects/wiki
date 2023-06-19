@@ -15,7 +15,6 @@ class Input {
 
     window.addEventListener("keyup", (event) => {
       delete Input.keysPressed[event.key];
-      // delete Input.keysPressedPending[event.key];
     });
   }
 
@@ -77,11 +76,7 @@ function menu(menuActions) {
     console.log(`${idx}. ${menuAction}`);
   });
   console.log("----------");
-  // validKeys = [];
-  // range(menuActions.length).forEach((x) => validKeys.push(String(x)));
-  // console.log(validKeys);
   while (true) {
-    // await until((_) => (menuSelection = Input.getKeyDown(...validKeys)));
     menuSelection = prompt("Select a menu Item: ");
     try {
       menuSelection = Number(menuSelection);
@@ -108,7 +103,6 @@ async function main() {
         await search(searchQuery)
           .then(async (results) => {
             console.log("Search results:", results);
-            // savingData = prompt("Would you like to save this query? (Y/N)").toUpperCase() == "Y";
             console.log("Would you like to save this query? (Y/N)");
             await until((_) => (savingData = Input.getKeyDown("y", "n")));
 
@@ -143,6 +137,7 @@ async function main() {
         Input.clearPendingInputs();
         await until((_) => (keyPressed = Input.getKeyDown("Enter", ...validIdxs)));
         if (keyPressed === "Enter") {
+          console.clear();
           continue;
         }
 
@@ -156,16 +151,11 @@ async function main() {
 
         if (deleteRecord) {
           delete savedData[currentRecord];
+          console.clear();
+          console.log("Deleted record: " + currentRecord);
+        } else {
+          console.clear();
         }
-
-        console.clear();
-        console.log("Deleted record: " + currentRecord);
-
-      // await until((_) => Input.anyKeyDown());
-      // for (let data of savedData) {
-      //   console.log(data);
-      // }
-      // menu("View saved query data", "Delete saved query data");
     }
   }
 }
